@@ -47,7 +47,8 @@ public class DepartmentListController implements Initializable{
 	@FXML
 	public void onBtnNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDiaologForm("/GUI/DepartmentForm.fxml", parentStage);
+		Department obj = new Department();
+		createDiaologForm(obj, "/GUI/DepartmentForm.fxml", parentStage);
 	}
 	
 	public void setDepartmentService(DepartmentService service) {
@@ -77,11 +78,15 @@ public class DepartmentListController implements Initializable{
 		tableViewDepartments.setItems(obsList);
 	}
 	
-	private void createDiaologForm(String absoluteName, Stage paretnStage) {
+	private void createDiaologForm(Department obj, String absoluteName, Stage paretnStage) {
 		
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
+			
+			DepartmentFormController controller = loader.getController();
+			controller.setDepartment(obj);
+			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Enter Department Data");
